@@ -1,12 +1,39 @@
 'use strict';
 
+/*
+ * Work left to do:
+ *
+ * - Create while or do-while loop to continue displaying images for voting while votingRounds > 0
+ * - Create conditional to ensure that the images for a voting round !== the images for the previous round
+ *
+*/
+
 // Declares instance variables
 var votingRounds = 25;
 var imgLeft, imgCenter, imgRight; // Declares variables used to store arrCatalogItems indexes
-var arrCatalogItems = [ // Array to create and store CatalogItem instances
-  new CatalogItem('testImg1', 'img/bag.jpg'),
-  new CatalogItem ('testImg2', 'img/banana.jpg'),
-  new CatalogItem('testImg3', 'img/bathroom.jpg')
+
+// Array to create and store CatalogItem instances
+var arrCatalogItems = [
+  new CatalogItem('R2-D2 Suitcase', 'img/bag.jpg'),
+  new CatalogItem ('Banana Cutter', 'img/banana.jpg'),
+  new CatalogItem('Tablet/TP Holder', 'img/bathroom.jpg'),
+  new CatalogItem('Rain Boots', 'img/boots.jpg'),
+  new CatalogItem('All-in-One Breakfast Appliance', 'img/breakfast.jpg'),
+  new CatalogItem('Meatball Bubblegum', 'img/bubblegum.jpg'),
+  new CatalogItem('Chair', 'img/chair.jpg'),
+  new CatalogItem('Cthulhu Figurine', 'img/cthulhu.jpg'),
+  new CatalogItem('Duck Muzzle', 'img/dog-duck.jpg'),
+  new CatalogItem('Dragon Meat', 'img/dragon.jpg'),
+  new CatalogItem('Utensil Pen Caps', 'img/pen.jpg'),
+  new CatalogItem('Pet Dusters', 'img/pet-sweep.jpg'),
+  new CatalogItem('Pizza Scissors', 'img/scissors.jpg'),
+  new CatalogItem('Shark Sleeping Bag', 'img/shark.jpg'),
+  new CatalogItem('Sweeping Onesie', 'img/sweep.png'),
+  new CatalogItem('TaunTaun Sleeping Bag', 'img/tauntaun.jpg'),
+  new CatalogItem('Unicorn Meat', 'img/unicorn.jpg'),
+  new CatalogItem('Octo-Leg USB', 'img/usb.gif'),
+  new CatalogItem('Watering Can', 'img/water-can.jpg'),
+  new CatalogItem('Wine Glass', 'img/wine-glass.jpg')
 ];
 
 // Declares and instantiates event listeners and related event handlers
@@ -45,6 +72,7 @@ function handleUserVote(event) {
   }
 
   votingRounds--;
+  pickNewCatalogItems();
 }
 
 // Selects and displays 3 new images at random (Ignoring previous 3 images shown)
