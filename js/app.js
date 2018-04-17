@@ -61,7 +61,9 @@ new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 // Increments CatalogItem vote count and executes function to display 3 new images
 // Decrements number of rounds left for user to vote on images
 CatalogItem.handleUserVote = function(event) {
-  event.preventDefault();
+  // Decrements voting rounds left
+  votingRounds--;
+  console.log('Rounds left = ' + votingRounds);
 
   var userSelection = event.target;
   console.log('The user clicked ' + userSelection.id);
@@ -74,37 +76,41 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.imgRight.votes++;
   }
 
-  votingRounds--;
-  pickNewCatalogItems();
+  CatalogItem.pickNewCatalogItems();
 };
 
 // Selects and displays 3 new images at random (Ignoring previous 3 images shown)
 // Executes on page load and upon user click events
-function pickNewCatalogItems() {
+CatalogItem.pickNewCatalogItems = function() {
+
+
+
+
+
 
   CatalogItem.previousCatalogItems.push(CatalogItem.imgLeft, CatalogItem.imgRight, CatalogItem.imgCenter);
 
   CatalogItem.imgLeft = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
-  CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.url;
-  CatalogItem.leftCatalogImage.altText = CatalogItem.imgLeft.altText;
+  CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.src;
+  CatalogItem.leftCatalogImage.altText = CatalogItem.imgLeft.alt;
 
   CatalogItem.imgCenter = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
-  CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.url;
-  CatalogItem.centerCatalogImage.altText = CatalogItem.imgCenter.altText;
+  CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.src;
+  CatalogItem.centerCatalogImage.altText = CatalogItem.imgCenter.alt;
 
   CatalogItem.imgRight = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
-  CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.url;
-  CatalogItem.rightCatalogImage.altText = CatalogItem.imgRight.altText;
+  CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.src;
+  CatalogItem.rightCatalogImage.altText = CatalogItem.imgRight.alt;
 
   CatalogItem.imgLeft.appearances++;
   CatalogItem.imgCenter.appearances++;
   CatalogItem.imgRight.appearances++;
 
   CatalogItem.previousCatalogItems = [];
-}
+};
 
 CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 
-pickNewCatalogItems();
+CatalogItem.pickNewCatalogItems();
