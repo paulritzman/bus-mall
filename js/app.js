@@ -16,14 +16,9 @@ CatalogItem.imgRight; // Declares variables used to store arrCatalogItems indexe
 CatalogItem.previousCatalogItems = []; // Declares array to store images from previous voting round
 
 // Declares and instantiates event listeners and related event handlers
-var leftCatalogImage = document.getElementById('left-catalog-image');
-var centerCatalogImage = document.getElementById('center-catalog-image');
-var rightCatalogImage = document.getElementById('right-catalog-image');
-
-
-leftCatalogImage.addEventListener('click', handleUserVote);
-centerCatalogImage.addEventListener('click', handleUserVote);
-rightCatalogImage.addEventListener('click', handleUserVote);
+CatalogItem.leftCatalogImage = document.getElementById('left-catalog-image');
+CatalogItem.centerCatalogImage = document.getElementById('center-catalog-image');
+CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
 
 CatalogItem.allItems = [];
 
@@ -62,7 +57,7 @@ new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 // Event handler for user click events
 // Increments CatalogItem vote count and executes function to display 3 new images
 // Decrements number of rounds left for user to vote on images
-function handleUserVote(event) {
+CatalogItem.handleUserVote = function(event) {
   event.preventDefault();
 
   var userSelection = event.target;
@@ -78,7 +73,7 @@ function handleUserVote(event) {
 
   votingRounds--;
   pickNewCatalogItems();
-}
+};
 
 // Selects and displays 3 new images at random (Ignoring previous 3 images shown)
 // Executes on page load and upon user click events
@@ -106,5 +101,9 @@ function pickNewCatalogItems() {
 
   previousCatalogItems = [];
 }
+
+CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 
 pickNewCatalogItems();
