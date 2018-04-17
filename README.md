@@ -8,6 +8,12 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 * Paul Ritzman - [paulritzman](https://github.com/paulritzman)
 
+## Resources
+
+* Color Palettes - [Color Palette #3811](http://colorpalettes.net/color-palette-3811/)
+
+* Lipsum - [Lorem Ipsum](https://www.lipsum.com/feed/html)
+
 ## Acknowledgements
 
 * Billie Thompson - README-Template.md - [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
