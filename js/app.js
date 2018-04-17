@@ -6,7 +6,7 @@
  * - Create while or do-while loop to continue displaying images for voting while votingRounds > 0
 */
 
-// Total number of rounds to vote - decrements upon user clicks
+// Total number of rounds to vote - increments upon user clicks
 var votingRounds = 0;
 
 // Variables used to store CatalogItem.allItems indexes
@@ -34,6 +34,7 @@ function CatalogItem(name, src, alt) {
   CatalogItem.allItems.push(this);
 }
 
+// Creates instances of CatalogItem
 new CatalogItem('R2-D2 Suitcase', 'img/bag.jpg', 'R2-D2 designed rolling suit case');
 new CatalogItem('Banana Cutter', 'img/banana.jpg', 'Plastic banana slicer');
 new CatalogItem('Tablet/TP Holder', 'img/bathroom.jpg', 'Dual table and toilet paper holder');
@@ -54,6 +55,22 @@ new CatalogItem('Unicorn Meat', 'img/unicorn.jpg', 'Canned unicorn meat');
 new CatalogItem('Octo-Leg USB', 'img/usb.gif', 'Moving octopus tentacle USB dongle');
 new CatalogItem('Watering Can', 'img/water-can.jpg', 'Curved watering can');
 new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
+
+CatalogItem.prototype.sortVotes = function() {
+
+};
+
+
+CatalogItem.prototype.renderList = function() {
+  var ulEl = document.getElementById('result-list');
+  var liEl;
+
+  for (var i = 0; i < CatalogItem.allItems.length; i++) {
+    liEl = document.createElement('li');
+    liEl.textContent = CatalogItem.allItems[i].votes + ' votes for the ' + CatalogItem.allItems[i].name;
+    ulEl.appendChild(liEl);
+  }
+};
 
 // Generates 3 random indexes to use for selecting new CatalogItem instances to display
 CatalogItem.randomIndexes = function() {
@@ -98,9 +115,8 @@ CatalogItem.pickNewCatalogItems = function() {
 };
 
 // Event handler for user click events
-// Increments vote count and executes function to display 3 new images, Decrements number of rounds left
+// Increments vote count and executes function to display 3 new images and number of rounds left
 CatalogItem.handleUserVote = function(event) {
-  // Decrements voting rounds left
   votingRounds++;
 
   var userSelection = event.target;
@@ -118,6 +134,9 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+
+    CatalogItem.prototype.sortVotes();
+    CatalogItem.prototype.renderList();
   }
 
   console.log('Round = ' + votingRounds);
