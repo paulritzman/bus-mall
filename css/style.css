@@ -31,9 +31,6 @@ main {
   margin: 0 auto;
   width: 1200px;
 }
-div {
-  display: inline;  
-}
 aside {
   border: 1px solid black;
   width: 240px;
