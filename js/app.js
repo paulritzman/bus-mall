@@ -8,19 +8,22 @@
  *
 */
 
-// Declares instance variables
+// Total number of rounds to vote - decrements upon user clicks
 var votingRounds = 25;
+
+// Variables used to store CatalogItem.allItems indexes
 CatalogItem.imgLeft;
 CatalogItem.imgCenter;
-CatalogItem.imgRight; // Declares variables used to store arrCatalogItems indexes
-CatalogItem.previousCatalogItems = []; // Declares array to store images from previous voting round
+CatalogItem.imgRight;
 
-// Declares and instantiates event listeners and related event handlers
+// Accesses img elements from DOM
 CatalogItem.leftCatalogImage = document.getElementById('left-catalog-image');
 CatalogItem.centerCatalogImage = document.getElementById('center-catalog-image');
 CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
 
+// Declares arrays used to store instances of CatalogItem objects, as well as store previous voting round images
 CatalogItem.allItems = [];
+CatalogItem.previousCatalogItems = [];
 
 // Declares CatalogItem constructor - takes in image name, image url, and image alt text
 // Sets appearances and votes to zero - incrementing upon image appearing on page or user click event, respectively
@@ -64,11 +67,11 @@ CatalogItem.handleUserVote = function(event) {
   console.log('The user clicked ' + userSelection.id);
 
   if (userSelection.id === 'left-catalog-image') {
-    imgLeft.votes++;
+    CatalogItem.imgLeft.votes++;
   } else if (userSelection.id === 'center-catalog-image') {
-    imgCenter.votes++;
+    CatalogItem.imgCenter.votes++;
   } else {
-    imgRight.votes++;
+    CatalogItem.imgRight.votes++;
   }
 
   votingRounds--;
@@ -79,27 +82,25 @@ CatalogItem.handleUserVote = function(event) {
 // Executes on page load and upon user click events
 function pickNewCatalogItems() {
 
-  previousCatalogItems.push(imgLeft, imgRight, imgCenter);
+  CatalogItem.previousCatalogItems.push(CatalogItem.imgLeft, CatalogItem.imgRight, CatalogItem.imgCenter);
 
-  do {
-    imgLeft = arrCatalogItems[Math.floor(Math.random() * arrCatalogItems.length)];
-    leftCatalogImage.src = imgLeft.url;
-    leftCatalogImage.altText = imgLeft.altText;
+  CatalogItem.imgLeft = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.url;
+  CatalogItem.leftCatalogImage.altText = CatalogItem.imgLeft.altText;
 
-    imgCenter = arrCatalogItems[Math.floor(Math.random() * arrCatalogItems.length)];
-    centerCatalogImage.src = imgCenter.url;
-    centerCatalogImage.altText = imgCenter.altText;
+  CatalogItem.imgCenter = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.url;
+  CatalogItem.centerCatalogImage.altText = CatalogItem.imgCenter.altText;
 
-    imgRight = arrCatalogItems[Math.floor(Math.random() * arrCatalogItems.length)];
-    rightCatalogImage.src = imgRight.url;
-    rightCatalogImage.altText = imgRight.altText;
-  } while (previousCatalogItems.includes());
+  CatalogItem.imgRight = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.url;
+  CatalogItem.rightCatalogImage.altText = CatalogItem.imgRight.altText;
 
-  imgLeft.appearances++;
-  imgCenter.appearances++;
-  imgRight.appearances++;
+  CatalogItem.imgLeft.appearances++;
+  CatalogItem.imgCenter.appearances++;
+  CatalogItem.imgRight.appearances++;
 
-  previousCatalogItems = [];
+  CatalogItem.previousCatalogItems = [];
 }
 
 CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
