@@ -7,7 +7,7 @@
 */
 
 // Total number of rounds to vote - decrements upon user clicks
-var votingRounds = 25;
+var votingRounds = 0;
 
 // Variables used to store CatalogItem.allItems indexes
 CatalogItem.imgLeft;
@@ -55,6 +55,7 @@ new CatalogItem('Octo-Leg USB', 'img/usb.gif', 'Moving octopus tentacle USB dong
 new CatalogItem('Watering Can', 'img/water-can.jpg', 'Curved watering can');
 new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 
+// Generates 3 random indexes to use for selecting new CatalogItem instances to display
 CatalogItem.randomIndexes = function() {
   var arrIndexes = [];
 
@@ -100,14 +101,7 @@ CatalogItem.pickNewCatalogItems = function() {
 // Increments vote count and executes function to display 3 new images, Decrements number of rounds left
 CatalogItem.handleUserVote = function(event) {
   // Decrements voting rounds left
-  votingRounds--;
-  console.log('Rounds left = ' + votingRounds);
-
-  if (votingRounds === 0) {
-    CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-  }
+  votingRounds++;
 
   var userSelection = event.target;
   console.log('The user clicked ' + userSelection.id);
@@ -120,11 +114,21 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.imgRight.votes++;
   }
 
+  if (votingRounds === 25) {
+    CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+  }
+
+  console.log('Round = ' + votingRounds);
+
   CatalogItem.pickNewCatalogItems();
 };
 
+// Event listeners for accepting user click input
 CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 
+// Executes on page load
 CatalogItem.pickNewCatalogItems();
