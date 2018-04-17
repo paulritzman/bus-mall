@@ -79,39 +79,24 @@ CatalogItem.randomIndexes = function() {
 // Executes on page load and upon user click events
 CatalogItem.pickNewCatalogItems = function() {
 
-  var newIndexes = CatalogItem.randomIndex();
+  var newIndexes = CatalogItem.randomIndexes();
 
-
-
-
-  CatalogItem.previousCatalogItems.push(CatalogItem.imgLeft, CatalogItem.imgRight, CatalogItem.imgCenter);
-
-  CatalogItem.imgLeft = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.imgLeft = CatalogItem.allItems[newIndexes[0]];
   CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.src;
   CatalogItem.leftCatalogImage.altText = CatalogItem.imgLeft.alt;
 
-  CatalogItem.imgCenter = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.imgCenter = CatalogItem.allItems[newIndexes[1]];
   CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.src;
   CatalogItem.centerCatalogImage.altText = CatalogItem.imgCenter.alt;
 
-  CatalogItem.imgRight = CatalogItem.allItems[Math.floor(Math.random() * CatalogItem.allItems.length)];
+  CatalogItem.imgRight = CatalogItem.allItems[newIndexes[2]];
   CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.src;
   CatalogItem.rightCatalogImage.altText = CatalogItem.imgRight.alt;
 
   CatalogItem.imgLeft.appearances++;
   CatalogItem.imgCenter.appearances++;
   CatalogItem.imgRight.appearances++;
-
-  CatalogItem.previousCatalogItems = [];
 };
-
-CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-
-CatalogItem.pickNewCatalogItems();
-
-
 
 // Event handler for user click events
 // Increments vote count and executes function to display 3 new images, Decrements number of rounds left
@@ -134,3 +119,8 @@ CatalogItem.handleUserVote = function(event) {
   CatalogItem.pickNewCatalogItems();
 };
 
+CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+
+CatalogItem.pickNewCatalogItems();
