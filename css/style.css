@@ -31,7 +31,21 @@ main {
   margin: 0 auto;
   width: 1200px;
 }
+div {
+  display: inline;  
+}
 aside {
   border: 1px solid black;
   width: 240px;
+  float: left;
+}
+section {
+  float: left;
+}
+img {
+  border: 2px solid black;
+  float: right;
+  height: 300px;
+  margin-left: 10px;
+  width: 300px;
 }
