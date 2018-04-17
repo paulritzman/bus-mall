@@ -4,8 +4,6 @@
  * Work left to do:
  *
  * - Create while or do-while loop to continue displaying images for voting while votingRounds > 0
- * - Create conditional to ensure that the images for a voting round !== the images for the previous round
- *
 */
 
 // Total number of rounds to vote - decrements upon user clicks
@@ -104,6 +102,12 @@ CatalogItem.handleUserVote = function(event) {
   // Decrements voting rounds left
   votingRounds--;
   console.log('Rounds left = ' + votingRounds);
+
+  if (votingRounds === 0) {
+    CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+  }
 
   var userSelection = event.target;
   console.log('The user clicked ' + userSelection.id);
