@@ -56,10 +56,12 @@ new CatalogItem('Octo-Leg USB', 'img/usb.gif', 'Moving octopus tentacle USB dong
 new CatalogItem('Watering Can', 'img/water-can.jpg', 'Curved watering can');
 new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 
+// Function to sort the instances of CatalogItem by vote number
 CatalogItem.prototype.sortVotes = function() {
   CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
 };
 
+// Function to render li elements to the DOM
 CatalogItem.prototype.renderList = function() {
   var ulEl = document.getElementById('result-list');
   var liEl;
@@ -129,6 +131,7 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.imgRight.votes++;
   }
 
+  // Stop listening for click events and render results to the DOM when vote total === 25
   if (votingRounds === 25) {
     CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
