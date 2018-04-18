@@ -1,11 +1,5 @@
 'use strict';
 
-/*
- * Work left to do:
- *
- * - Create while or do-while loop to continue displaying images for voting while votingRounds > 0
-*/
-
 // Total number of rounds to vote - increments upon user clicks
 var votingRounds = 0;
 
@@ -75,6 +69,7 @@ CatalogItem.prototype.renderList = function() {
 
 // Renders chart to the DOM - displaying voting results
 CatalogItem.renderChart = function() {
+  // Instantiates arrays for use in myChart object
   var arrChartLabel = [];
   var arrChartData = [];
   var arrChartColor = [];
@@ -100,8 +95,13 @@ CatalogItem.renderChart = function() {
     options: {
       scales: {
         yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Votes'
+          },
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            stepSize: 1
           }
         }]
       }

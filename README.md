@@ -14,6 +14,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 * Lipsum - [Lorem Ipsum](https://www.lipsum.com/feed/html)
 
+* Paul Irish - [Random Hex Color Generator](https://www.paulirish.com/2009/random-hex-color-code-snippets/)
+
 ## Acknowledgements
 
 * Billie Thompson - README-Template.md - [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
