@@ -13,6 +13,10 @@ CatalogItem.leftCatalogImage = document.getElementById('left-catalog-image');
 CatalogItem.centerCatalogImage = document.getElementById('center-catalog-image');
 CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
 
+// Accesses button elements from DOM
+var btnBar = document.getElementById('bar');
+var btnPie = document.getElementById('pie');
+
 // Declares arrays used to store instances of CatalogItem objects, as well as store previous voting round images
 CatalogItem.previousCatalogItems = [];
 
@@ -53,7 +57,7 @@ CatalogItem.allItems = parsedCatalog || [
 ];
 
 // Function to sort the instances of CatalogItem by vote number
-CatalogItem.prototype.sortVotes = function() {
+CatalogItem.sortVotes = function() {
   CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
 };
 
@@ -175,7 +179,7 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     // Sorts CatalogItem instances by votes
-    CatalogItem.prototype.sortVotes();
+    CatalogItem.sortVotes();
 
     // Stores results on local machine
     localStorage.setItem('results', JSON.stringify(CatalogItem.allItems));
@@ -184,15 +188,16 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.renderChart();
   }
 
-  if (votingRounds <= 25) {
-    CatalogItem.pickNewCatalogItems();
-  }
+  CatalogItem.pickNewCatalogItems();
 };
 
 // Event listeners for accepting user click input
 CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+
+btnBar.addEventListener('click', handleResultButton);
+btnPie.addEventListener('click', handleResultButton);
 
 // Executes on page load
 CatalogItem.pickNewCatalogItems();
