@@ -1,13 +1,7 @@
 'use strict';
 
-/*
- * Work left to do:
- *
- * - Create while or do-while loop to continue displaying images for voting while votingRounds > 0
-*/
-
 // Total number of rounds to vote - increments upon user clicks
-var votingRounds = 0;
+var votingRounds = 1;
 
 // Variables used to store CatalogItem.allItems indexes
 CatalogItem.imgLeft;
@@ -73,6 +67,58 @@ CatalogItem.prototype.renderList = function() {
   }
 };
 
+// Renders chart to the DOM - displaying voting results
+CatalogItem.renderChart = function() {
+  // Instantiates arrays for use in myChart object
+  var arrChartLabel = [];
+  var arrChartData = [];
+  var arrChartColor = [];
+  for (var i in CatalogItem.allItems) {
+    arrChartLabel.push(CatalogItem.allItems[i].name);
+    arrChartData.push(CatalogItem.allItems[i].votes);
+    arrChartColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrChartLabel,
+      datasets: [{
+        label: 'Voting Results',
+        data: arrChartData,
+        backgroundColor: arrChartColor,
+        borderColor: arrChartColor,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Catalog Items'
+          },
+          ticks: {
+            autoSkip: false,
+            stepSize: 1
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Votes'
+          },
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }]
+      }
+    }
+  });
+};
+
 // Generates 3 random indexes to use for selecting new CatalogItem instances to display
 CatalogItem.randomIndexes = function() {
   var arrIndexes = [];
@@ -118,6 +164,7 @@ CatalogItem.pickNewCatalogItems = function() {
 // Event handler for user click events
 // Increments vote count and executes function to display 3 new images and number of rounds left
 CatalogItem.handleUserVote = function(event) {
+  console.log('Round = ' + votingRounds);
   votingRounds++;
 
   var userSelection = event.target;
@@ -132,18 +179,19 @@ CatalogItem.handleUserVote = function(event) {
   }
 
   // Stop listening for click events and render results to the DOM when vote total === 25
-  if (votingRounds === 25) {
+  if (votingRounds > 25) {
     CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     CatalogItem.prototype.sortVotes();
     CatalogItem.prototype.renderList();
+    CatalogItem.renderChart();
   }
 
-  console.log('Round = ' + votingRounds);
-
-  CatalogItem.pickNewCatalogItems();
+  if (votingRounds <= 25) {
+    CatalogItem.pickNewCatalogItems();
+  }
 };
 
 // Event listeners for accepting user click input
