@@ -50,11 +50,14 @@ new CatalogItem('Octo-Leg USB', 'img/usb.gif', 'Moving octopus tentacle USB dong
 new CatalogItem('Watering Can', 'img/water-can.jpg', 'Curved watering can');
 new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 
+var stringCatalogItem = JSON.stringify(CatalogItem.allItems);
+
 // Function to sort the instances of CatalogItem by vote number
 CatalogItem.prototype.sortVotes = function() {
   CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
 };
 
+/*
 // Function to render li elements to the DOM
 CatalogItem.prototype.renderList = function() {
   var ulEl = document.getElementById('result-list');
@@ -66,6 +69,7 @@ CatalogItem.prototype.renderList = function() {
     ulEl.appendChild(liEl);
   }
 };
+*/
 
 // Renders chart to the DOM - displaying voting results
 CatalogItem.renderChart = function() {
@@ -185,8 +189,11 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     CatalogItem.prototype.sortVotes();
-    CatalogItem.prototype.renderList();
+    //CatalogItem.prototype.renderList();
     CatalogItem.renderChart();
+
+    var retrievedString = localStorage.getItem(stringCatalogItem);
+    console.log('retrievedString:', JSON.parse(retrievedString));
   }
 
   if (votingRounds <= 25) {
