@@ -56,9 +56,9 @@ new CatalogItem('Octo-Leg USB', 'img/usb.gif', 'Moving octopus tentacle USB dong
 new CatalogItem('Watering Can', 'img/water-can.jpg', 'Curved watering can');
 new CatalogItem('Wine Glass', 'img/wine-glass.jpg', 'Wine glass');
 
-// CatalogItem.prototype.sortVotes = function() {
-//   CatalogItem.allItems.sort(function(a, b){return a.votes - b.votes;});
-// };
+CatalogItem.prototype.sortVotes = function() {
+  CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
+};
 
 CatalogItem.prototype.renderList = function() {
   var ulEl = document.getElementById('result-list');
@@ -134,7 +134,7 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
-    CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
+    CatalogItem.prototype.sortVotes();
     CatalogItem.prototype.renderList();
   }
 
