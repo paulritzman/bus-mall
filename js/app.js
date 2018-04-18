@@ -94,6 +94,16 @@ CatalogItem.renderChart = function() {
     },
     options: {
       scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Catalog Items'
+          },
+          ticks: {
+            autoSkip: false,
+            stepSize: 1
+          }
+        }],
         yAxes: [{
           scaleLabel: {
             display: true,
