@@ -146,15 +146,15 @@ CatalogItem.pickNewCatalogItems = function() {
 
   CatalogItem.imgLeft = CatalogItem.allItems[newIndexes[0]];
   CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.src;
-  CatalogItem.leftCatalogImage.altText = CatalogItem.imgLeft.alt;
+  CatalogItem.leftCatalogImage.alt = CatalogItem.imgLeft.alt;
 
   CatalogItem.imgCenter = CatalogItem.allItems[newIndexes[1]];
   CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.src;
-  CatalogItem.centerCatalogImage.altText = CatalogItem.imgCenter.alt;
+  CatalogItem.centerCatalogImage.alt = CatalogItem.imgCenter.alt;
 
   CatalogItem.imgRight = CatalogItem.allItems[newIndexes[2]];
   CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.src;
-  CatalogItem.rightCatalogImage.altText = CatalogItem.imgRight.alt;
+  CatalogItem.rightCatalogImage.alt = CatalogItem.imgRight.alt;
 
   CatalogItem.imgLeft.appearances++;
   CatalogItem.imgCenter.appearances++;
