@@ -77,9 +77,11 @@ CatalogItem.prototype.renderList = function() {
 CatalogItem.renderChart = function() {
   var arrChartLabel = [];
   var arrChartData = [];
+  var arrChartColor = [];
   for (var i in CatalogItem.allItems) {
     arrChartLabel.push(CatalogItem.allItems[i].name);
     arrChartData.push(CatalogItem.allItems[i].votes);
+    arrChartColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
   }
 
   var ctx = document.getElementById('myChart').getContext('2d');
@@ -88,13 +90,13 @@ CatalogItem.renderChart = function() {
     data: {
       labels: arrChartLabel,
       datasets: [{
-        label: '# of votes',
+        label: 'Voting Results',
         data: arrChartData,
         backgroundColor: [
-          'rgba(130, 130, 130, 0.2)'
+          arrChartColor
         ],
         borderColor: [
-          'rgba(255, 255, 255, 0)'
+          arrChartColor
         ],
         borderWidth: 1
       }]
@@ -176,7 +178,7 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     CatalogItem.prototype.sortVotes();
-    //CatalogItem.prototype.renderList();
+    CatalogItem.prototype.renderList();
     CatalogItem.renderChart();
   }
 
