@@ -16,7 +16,7 @@ CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
 // Declares arrays used to store instances of CatalogItem objects, as well as store previous voting round images
 CatalogItem.previousCatalogItems = [];
 
-var parsedCatalog = localStorage.getItem('results');
+var parsedCatalog = JSON.parse(localStorage.getItem('results'));
 
 // Declares CatalogItem constructor - takes in image name, image url, and image alt text
 // Sets appearances and votes to zero - incrementing upon image appearing on page or user click event, respectively
