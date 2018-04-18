@@ -16,6 +16,8 @@ CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
 // Declares arrays used to store instances of CatalogItem objects, as well as store previous voting round images
 CatalogItem.previousCatalogItems = [];
 
+var parsedCatalog = localStorage.getItem('results');
+
 // Declares CatalogItem constructor - takes in image name, image url, and image alt text
 // Sets appearances and votes to zero - incrementing upon image appearing on page or user click event, respectively
 function CatalogItem(name, src, alt) {
@@ -27,7 +29,7 @@ function CatalogItem(name, src, alt) {
 }
 
 // Creates instances of CatalogItem
-CatalogItem.allItems = [
+CatalogItem.allItems = parsedCatalog || [
   new CatalogItem('R2-D2 Suitcase', 'img/bag.jpg', 'R2-D2 designed rolling suit case'),
   new CatalogItem('Banana Cutter', 'img/banana.jpg', 'Plastic banana slicer'),
   new CatalogItem('Tablet/TP Holder', 'img/bathroom.jpg', 'Dual table and toilet paper holder'),
@@ -166,16 +168,19 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.imgRight.votes++;
   }
 
-  // Stop listening for click events and render results to the DOM when vote total === 25
+  // Stop listening for click events and render results to the DOM after the 25th round
   if (votingRounds > 25) {
     CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
+    // Sorts CatalogItem instances by votes
     CatalogItem.prototype.sortVotes();
 
+    // Stores results on local machine
     localStorage.setItem('results', JSON.stringify(CatalogItem.allItems));
 
+    // Renders chart to the DOM
     CatalogItem.renderChart();
   }
 
