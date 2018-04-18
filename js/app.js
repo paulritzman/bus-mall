@@ -153,3 +153,32 @@ CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVo
 
 // Executes on page load
 CatalogItem.pickNewCatalogItems();
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: CatalogItem.allItems,
+    datasets: [{
+      label: '# of votes',
+      data: [CatalogItem.allItems.votes],
+      backgroundColor: [
+        'rgba(130, 130, 130, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 255, 255, 0)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+});
