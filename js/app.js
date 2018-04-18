@@ -62,7 +62,7 @@ CatalogItem.sortVotes = function() {
 };
 
 // Renders chart to the DOM - displaying voting results
-CatalogItem.renderChart = function() {
+CatalogItem.renderChart = function(chartType) {
   // Instantiates arrays for use in myChart object
   var arrChartLabel = [];
   var arrChartData = [];
@@ -75,7 +75,7 @@ CatalogItem.renderChart = function() {
 
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: chartType,
     data: {
       labels: arrChartLabel,
       datasets: [{
@@ -185,11 +185,18 @@ CatalogItem.handleUserVote = function(event) {
     localStorage.setItem('results', JSON.stringify(CatalogItem.allItems));
 
     // Renders chart to the DOM
-    CatalogItem.renderChart();
+    //CatalogItem.renderChart();
   }
 
   CatalogItem.pickNewCatalogItems();
 };
+
+function handleResultButton(event) {
+  var chartType = event.target.id;
+  console.log(chartType);
+
+  CatalogItem.renderChart(chartType);
+}
 
 // Event listeners for accepting user click input
 CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
