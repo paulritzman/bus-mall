@@ -62,7 +62,7 @@ CatalogItem.sortVotes = function() {
 };
 
 // Renders chart to the DOM - displaying voting results
-CatalogItem.renderChart = function(chartType) {
+CatalogItem.renderChart = function(chartType, boolLabel) {
   // Instantiates arrays for use in myChart object
   var arrChartLabel = [];
   var arrChartData = [];
@@ -90,7 +90,7 @@ CatalogItem.renderChart = function(chartType) {
       scales: {
         xAxes: [{
           scaleLabel: {
-            display: true,
+            display: boolLabel,
             labelString: 'Catalog Items'
           },
           ticks: {
@@ -100,7 +100,7 @@ CatalogItem.renderChart = function(chartType) {
         }],
         yAxes: [{
           scaleLabel: {
-            display: true,
+            display: boolLabel,
             labelString: 'Votes'
           },
           ticks: {
@@ -195,7 +195,12 @@ function handleResultButton(event) {
   var chartType = event.target.id;
   console.log(chartType);
 
-  CatalogItem.renderChart(chartType);
+  // Determines if chart label should appear
+  var boolLabel = true;
+  if (chartType === 'pie')
+    boolLabel = false;
+
+  CatalogItem.renderChart(chartType, boolLabel);
 }
 
 // Event listeners for accepting user click input
