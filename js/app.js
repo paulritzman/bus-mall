@@ -73,6 +73,44 @@ CatalogItem.prototype.renderList = function() {
   }
 };
 
+// Renders chart to the DOM - displaying voting results
+CatalogItem.renderChart = function() {
+  var arrChartLabel = [];
+  var arrChartData = [];
+  for (var i in CatalogItem.allItems) {
+    arrChartLabel.push(CatalogItem.allItems[i].name);
+    arrChartData.push(CatalogItem.allItems[i].votes);
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrChartLabel,
+      datasets: [{
+        label: '# of votes',
+        data: arrChartData,
+        backgroundColor: [
+          'rgba(130, 130, 130, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 255, 255, 0)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+};
+
 // Generates 3 random indexes to use for selecting new CatalogItem instances to display
 CatalogItem.randomIndexes = function() {
   var arrIndexes = [];
@@ -138,7 +176,8 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     CatalogItem.prototype.sortVotes();
-    CatalogItem.prototype.renderList();
+    //CatalogItem.prototype.renderList();
+    CatalogItem.renderChart();
   }
 
   console.log('Round = ' + votingRounds);
@@ -153,32 +192,3 @@ CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVo
 
 // Executes on page load
 CatalogItem.pickNewCatalogItems();
-
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: CatalogItem.allItems,
-    datasets: [{
-      label: '# of votes',
-      data: [CatalogItem.allItems.votes],
-      backgroundColor: [
-        'rgba(130, 130, 130, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255, 255, 255, 0)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
-});
