@@ -55,20 +55,6 @@ CatalogItem.prototype.sortVotes = function() {
   CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
 };
 
-/*
-// Function to render li elements to the DOM
-CatalogItem.prototype.renderList = function() {
-  var ulEl = document.getElementById('result-list');
-  var liEl;
-
-  for (var i = 0; i < CatalogItem.allItems.length; i++) {
-    liEl = document.createElement('li');
-    liEl.textContent = CatalogItem.allItems[i].votes + ' votes for the ' + CatalogItem.allItems[i].name;
-    ulEl.appendChild(liEl);
-  }
-};
-*/
-
 // Renders chart to the DOM - displaying voting results
 CatalogItem.renderChart = function() {
   // Instantiates arrays for use in myChart object
@@ -187,16 +173,10 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     CatalogItem.prototype.sortVotes();
-    //CatalogItem.prototype.renderList();
 
     localStorage.setItem('results', JSON.stringify(CatalogItem.allItems));
-    CatalogItem.renderChart();
 
-    /*
-    var stringCatalogItem = JSON.stringify(CatalogItem.allItems);
-    var retrievedString = localStorage.getItem(stringCatalogItem); //////////// localStorage
-    console.log('retrievedString:', JSON.parse(retrievedString));
-    */
+    CatalogItem.renderChart();
   }
 
   if (votingRounds <= 25) {
