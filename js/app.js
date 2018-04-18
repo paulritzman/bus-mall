@@ -92,12 +92,8 @@ CatalogItem.renderChart = function() {
       datasets: [{
         label: 'Voting Results',
         data: arrChartData,
-        backgroundColor: [
-          arrChartColor
-        ],
-        borderColor: [
-          arrChartColor
-        ],
+        backgroundColor: arrChartColor,
+        borderColor: arrChartColor,
         borderWidth: 1
       }]
     },
