@@ -1,7 +1,7 @@
 'use strict';
 
 // Total number of rounds to vote - increments upon user clicks
-var votingRounds = 0;
+var votingRounds = 1;
 
 // Variables used to store CatalogItem.allItems indexes
 CatalogItem.imgLeft;
@@ -164,6 +164,7 @@ CatalogItem.pickNewCatalogItems = function() {
 // Event handler for user click events
 // Increments vote count and executes function to display 3 new images and number of rounds left
 CatalogItem.handleUserVote = function(event) {
+  console.log('Round = ' + votingRounds);
   votingRounds++;
 
   var userSelection = event.target;
@@ -178,7 +179,7 @@ CatalogItem.handleUserVote = function(event) {
   }
 
   // Stop listening for click events and render results to the DOM when vote total === 25
-  if (votingRounds === 25) {
+  if (votingRounds > 25) {
     CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
     CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
@@ -188,9 +189,9 @@ CatalogItem.handleUserVote = function(event) {
     CatalogItem.renderChart();
   }
 
-  console.log('Round = ' + votingRounds);
-
-  CatalogItem.pickNewCatalogItems();
+  if (votingRounds <= 25) {
+    CatalogItem.pickNewCatalogItems();
+  }
 };
 
 // Event listeners for accepting user click input
