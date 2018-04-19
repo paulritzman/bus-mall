@@ -8,19 +8,23 @@ var imgLeft;
 var imgCenter;
 var imgRight;
 
-// Accesses img elements from DOM
+// Grabs img elements from DOM
 var leftCatalogImage = document.getElementById('left-catalog-image');
 var centerCatalogImage = document.getElementById('center-catalog-image');
 var rightCatalogImage = document.getElementById('right-catalog-image');
 
-// Accesses button elements from DOM
+// Grabs button elements from DOM
 var btnBar = document.getElementById('bar');
 var btnPie = document.getElementById('pie');
 
+// Grabs canvas element from DOM
+var ctx = document.getElementById('myChart').getContext('2d');
+
+// Stores the information (parsed) from local storage
+var parsedCatalog = JSON.parse(localStorage.getItem('results'));
+
 // Declares arrays used to store instances of CatalogItem objects, as well as store previous voting round images
 CatalogItem.previousCatalogItems = [];
-
-var parsedCatalog = JSON.parse(localStorage.getItem('results'));
 
 // Declares CatalogItem constructor - takes in image name, image url, and image alt text
 // Sets appearances and votes to zero - incrementing upon image appearing on page or user click event, respectively
@@ -32,7 +36,7 @@ function CatalogItem(name, src, alt) {
   this.votes = 0;
 }
 
-// Creates instances of CatalogItem
+// Creates instances of CatalogItem - if there is data stored locally, it uses the local data instead
 CatalogItem.allItems = parsedCatalog || [
   new CatalogItem('R2-D2 Suitcase', 'img/bag.jpg', 'R2-D2 designed rolling suit case'),
   new CatalogItem('Banana Cutter', 'img/banana.jpg', 'Plastic banana slicer'),
@@ -41,7 +45,7 @@ CatalogItem.allItems = parsedCatalog || [
   new CatalogItem('All-in-One Breakfast Appliance', 'img/breakfast.jpg', 'Multi-use appliance for cooking'),
   new CatalogItem('Meatball Bubblegum', 'img/bubblegum.jpg', 'Bubblegum shaped like meatballs'),
   new CatalogItem('Chair', 'img/chair.jpg', 'Chair with dome shaped seat'),
-  new CatalogItem('Cthulhu Figurine', 'img/cthulhu.jpg', 'Cthulhu figuring with accompanying toy soldier'),
+  new CatalogItem('Cthulhu Figurine', 'img/cthulhu.jpg', 'Cthulhu figurine with accompanying toy soldier'),
   new CatalogItem('Duck Muzzle', 'img/dog-duck.jpg', 'Duck-bill shaped dog muzzle'),
   new CatalogItem('Dragon Meat', 'img/dragon.jpg', 'Canned dragon meat'),
   new CatalogItem('Utensil Pen Caps', 'img/pen.jpg', 'Pen caps shaped like eating utensils'),
@@ -59,58 +63,6 @@ CatalogItem.allItems = parsedCatalog || [
 // Function to sort the instances of CatalogItem by vote number
 CatalogItem.sortVotes = function() {
   CatalogItem.allItems.sort(function(a, b){return b.votes - a.votes;});
-};
-
-// Renders chart to the DOM - displaying voting results
-CatalogItem.renderChart = function(chartType, boolLabel) {
-  // Instantiates arrays for use in myChart object
-  var arrChartLabel = [];
-  var arrChartData = [];
-  var arrChartColor = [];
-  for (var i in CatalogItem.allItems) {
-    arrChartLabel.push(CatalogItem.allItems[i].name);
-    arrChartData.push(CatalogItem.allItems[i].votes);
-    arrChartColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
-  }
-
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: chartType,
-    data: {
-      labels: arrChartLabel,
-      datasets: [{
-        label: 'Voting Results',
-        data: arrChartData,
-        backgroundColor: arrChartColor,
-        borderColor: arrChartColor,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        xAxes: [{
-          scaleLabel: {
-            display: boolLabel,
-            labelString: 'Catalog Items'
-          },
-          ticks: {
-            autoSkip: false,
-            stepSize: 1
-          }
-        }],
-        yAxes: [{
-          scaleLabel: {
-            display: boolLabel,
-            labelString: 'Votes'
-          },
-          ticks: {
-            beginAtZero: true,
-            stepSize: 1
-          }
-        }]
-      }
-    }
-  });
 };
 
 // Generates 3 random indexes to use for selecting new CatalogItem instances to display
@@ -155,9 +107,60 @@ CatalogItem.pickNewCatalogItems = function() {
   imgRight.appearances++;
 };
 
+// Renders chart to the DOM - displaying voting results
+CatalogItem.renderChart = function(chartType, boolLabel) {
+  // Instantiates arrays for use in myChart object
+  var arrChartLabel = [];
+  var arrChartData = [];
+  var arrChartColor = [];
+  for (var i in CatalogItem.allItems) {
+    arrChartLabel.push(CatalogItem.allItems[i].name);
+    arrChartData.push(CatalogItem.allItems[i].votes);
+    arrChartColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+  }
+
+  myChart = new Chart(ctx, {
+    type: chartType,
+    data: {
+      labels: arrChartLabel,
+      datasets: [{
+        label: 'Voting Results',
+        data: arrChartData,
+        backgroundColor: arrChartColor,
+        borderColor: arrChartColor,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: boolLabel,
+            labelString: 'Catalog Items'
+          },
+          ticks: {
+            autoSkip: false,
+            stepSize: 1
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: boolLabel,
+            labelString: 'Votes'
+          },
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1
+          }
+        }]
+      }
+    }
+  });
+};
+
 // Event handler for user click events
 // Increments vote count and executes function to display 3 new images and number of rounds left
-CatalogItem.handleUserVote = function(event) {
+function handleUserVote(event) {
   console.log('Round = ' + votingRounds);
   votingRounds++;
 
@@ -174,22 +177,19 @@ CatalogItem.handleUserVote = function(event) {
 
   // Stop listening for click events and render results to the DOM after the 25th round
   if (votingRounds > 25) {
-    leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    leftCatalogImage.removeEventListener('click', handleUserVote);
+    centerCatalogImage.removeEventListener('click', handleUserVote);
+    rightCatalogImage.removeEventListener('click', handleUserVote);
 
     // Sorts CatalogItem instances by votes
     CatalogItem.sortVotes();
 
     // Stores results on local machine
     localStorage.setItem('results', JSON.stringify(CatalogItem.allItems));
-
-    // Renders chart to the DOM
-    //CatalogItem.renderChart();
   }
 
   CatalogItem.pickNewCatalogItems();
-};
+}
 
 function handleResultButton(event) {
   var chartType = event.target.id;
@@ -204,9 +204,9 @@ function handleResultButton(event) {
 }
 
 // Event listeners for accepting user click input
-leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+leftCatalogImage.addEventListener('click', handleUserVote);
+centerCatalogImage.addEventListener('click', handleUserVote);
+rightCatalogImage.addEventListener('click', handleUserVote);
 
 btnBar.addEventListener('click', handleResultButton);
 btnPie.addEventListener('click', handleResultButton);
