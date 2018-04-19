@@ -4,14 +4,14 @@
 var votingRounds = 1;
 
 // Variables used to store CatalogItem.allItems indexes
-CatalogItem.imgLeft;
-CatalogItem.imgCenter;
-CatalogItem.imgRight;
+var imgLeft;
+var imgCenter;
+var imgRight;
 
 // Accesses img elements from DOM
-CatalogItem.leftCatalogImage = document.getElementById('left-catalog-image');
-CatalogItem.centerCatalogImage = document.getElementById('center-catalog-image');
-CatalogItem.rightCatalogImage = document.getElementById('right-catalog-image');
+var leftCatalogImage = document.getElementById('left-catalog-image');
+var centerCatalogImage = document.getElementById('center-catalog-image');
+var rightCatalogImage = document.getElementById('right-catalog-image');
 
 // Accesses button elements from DOM
 var btnBar = document.getElementById('bar');
@@ -138,21 +138,21 @@ CatalogItem.pickNewCatalogItems = function() {
 
   var newIndexes = CatalogItem.randomIndexes();
 
-  CatalogItem.imgLeft = CatalogItem.allItems[newIndexes[0]];
-  CatalogItem.leftCatalogImage.src = CatalogItem.imgLeft.src;
-  CatalogItem.leftCatalogImage.alt = CatalogItem.imgLeft.alt;
+  imgLeft = CatalogItem.allItems[newIndexes[0]];
+  leftCatalogImage.src = imgLeft.src;
+  leftCatalogImage.alt = imgLeft.alt;
 
-  CatalogItem.imgCenter = CatalogItem.allItems[newIndexes[1]];
-  CatalogItem.centerCatalogImage.src = CatalogItem.imgCenter.src;
-  CatalogItem.centerCatalogImage.alt = CatalogItem.imgCenter.alt;
+  imgCenter = CatalogItem.allItems[newIndexes[1]];
+  centerCatalogImage.src = imgCenter.src;
+  centerCatalogImage.alt = imgCenter.alt;
 
-  CatalogItem.imgRight = CatalogItem.allItems[newIndexes[2]];
-  CatalogItem.rightCatalogImage.src = CatalogItem.imgRight.src;
-  CatalogItem.rightCatalogImage.alt = CatalogItem.imgRight.alt;
+  imgRight = CatalogItem.allItems[newIndexes[2]];
+  rightCatalogImage.src = imgRight.src;
+  rightCatalogImage.alt = imgRight.alt;
 
-  CatalogItem.imgLeft.appearances++;
-  CatalogItem.imgCenter.appearances++;
-  CatalogItem.imgRight.appearances++;
+  imgLeft.appearances++;
+  imgCenter.appearances++;
+  imgRight.appearances++;
 };
 
 // Event handler for user click events
@@ -165,18 +165,18 @@ CatalogItem.handleUserVote = function(event) {
   console.log('The user clicked ' + userSelection.id);
 
   if (userSelection.id === 'left-catalog-image') {
-    CatalogItem.imgLeft.votes++;
+    imgLeft.votes++;
   } else if (userSelection.id === 'center-catalog-image') {
-    CatalogItem.imgCenter.votes++;
+    imgCenter.votes++;
   } else {
-    CatalogItem.imgRight.votes++;
+    imgRight.votes++;
   }
 
   // Stop listening for click events and render results to the DOM after the 25th round
   if (votingRounds > 25) {
-    CatalogItem.leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    CatalogItem.centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
-    CatalogItem.rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    leftCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    centerCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
+    rightCatalogImage.removeEventListener('click', CatalogItem.handleUserVote);
 
     // Sorts CatalogItem instances by votes
     CatalogItem.sortVotes();
@@ -204,9 +204,9 @@ function handleResultButton(event) {
 }
 
 // Event listeners for accepting user click input
-CatalogItem.leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-CatalogItem.centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
-CatalogItem.rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+leftCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+centerCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
+rightCatalogImage.addEventListener('click', CatalogItem.handleUserVote);
 
 btnBar.addEventListener('click', handleResultButton);
 btnPie.addEventListener('click', handleResultButton);
