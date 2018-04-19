@@ -118,8 +118,11 @@ CatalogItem.renderChart = function(chartType, boolLabel) {
     arrChartData.push(CatalogItem.allItems[i].votes);
     arrChartColor.push('#' + Math.floor(Math.random() * 16777215).toString(16));
   }
+  if (CatalogItem.myChart) {
+    CatalogItem.myChart.destroy();
+  }
 
-  myChart = new Chart(ctx, {
+  CatalogItem.myChart = new Chart(ctx, {
     type: chartType,
     data: {
       labels: arrChartLabel,
