@@ -14,6 +14,7 @@ nav {
   width: 960px;
 }
 h1 { 
+  color: white;
   float: left;
   font-size: 24px;
   margin: 20px 0px;
@@ -75,4 +76,10 @@ figure img {
   height: 375px;
   margin: 10px;
   width: 375px;
+}
+a {
+  text-decoration: none;
+}
+h1 a {
+  color: white;
 }
