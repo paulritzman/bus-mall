@@ -70,3 +70,9 @@ div p {
   width: 300px;
   margin: 20px 15px 20px 0px;
 }
+figure img {
+  float: left;
+  height: 375px;
+  margin: 10px;
+  width: 375px;
+}
