@@ -14,6 +14,7 @@ nav {
   width: 960px;
 }
 h1 { 
+  color: white;
   float: left;
   font-size: 24px;
   margin: 20px 0px;
@@ -27,14 +28,33 @@ nav button {
   margin-top: 30px;
   width: 80px;
 }
+nav button:hover {
+  transform: scaleY(1.2) translateY(-3px);
+}
 main {
   margin: 0 auto;
   width: 1200px;
 }
 aside {
+  background-color: #1b2c00;
   border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  height: 150px;
   width: 240px;
   float: left;
+}
+h2 {
+  font-size: 20px;
+  margin: 10px 0px;
+  text-align: center;
+}
+aside button {
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 2em;
+  margin: 10px 10px 5px 10px;;
+  width: 92%;
 }
 section {
   float: left;
@@ -45,4 +65,21 @@ img {
   height: 300px;
   margin-left: 10px;
   width: 300px;
+}
+div p {
+  float: right;
+  width: 300px;
+  margin: 20px 15px 20px 0px;
+}
+figure img {
+  float: left;
+  height: 375px;
+  margin: 10px;
+  width: 375px;
+}
+a {
+  text-decoration: none;
+}
+h1 a {
+  color: white;
 }
